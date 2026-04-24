@@ -1,4 +1,5 @@
 from django.db import migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -6,7 +7,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunSQL(
-            sql="CREATE SCHEMA IF NOT EXISTS proxy_service;",
-            reverse_sql="DROP SCHEMA IF EXISTS proxy_service CASCADE;",
+            sql=f"CREATE SCHEMA IF NOT EXISTS {settings.DB_SCHEMA_NAME};",
+            reverse_sql=f"DROP SCHEMA IF EXISTS {settings.DB_SCHEMA_NAME} CASCADE;",
         ),
     ]
