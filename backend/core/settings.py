@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'drf_spectacular',
-    'proxy_api.apps.ProxyApiConfig'
+    'accounts.apps.AccountsConfig',
+    'proxy_api.apps.ProxyApiConfig',
 ]
 
 MIDDLEWARE = [
