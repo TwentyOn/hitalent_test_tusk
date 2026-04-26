@@ -1,5 +1,6 @@
 from django.urls import path
+from .views import Test
 
 urlpatterns = [
-    # path('test/', )
+    # path('register/', Test.as_view())
 ]
