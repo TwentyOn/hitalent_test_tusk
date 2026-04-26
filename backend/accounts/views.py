@@ -12,4 +12,10 @@ class CreateUserView(GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
-        pass
+        data = request.data
+        print(data)
+        data['activation_key'] = 'test_key'
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
