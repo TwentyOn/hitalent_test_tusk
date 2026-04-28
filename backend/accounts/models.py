@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 
@@ -14,6 +16,15 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
+
+    def save(self, **kwargs):
+        if not self.pk:
+            self.activation_key = self.create_activation_key()
+        super().save(**kwargs)
+
+    @staticmethod
+    def create_activation_key():
+        return uuid.uuid4()
 
     def __str__(self):
         return self.email
