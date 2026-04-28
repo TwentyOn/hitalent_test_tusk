@@ -14,8 +14,6 @@ class UserView(GenericViewSet):
     serializer_class = UserSerializer
 
     def create(self, request):
-        data = request.data
-        data['activation_key'] = 'test_key'
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -29,3 +27,13 @@ class UserView(GenericViewSet):
         serializer = self.get_serializer(user)
 
         return Response(serializer.data)
+
+    def partial_update(self, request, pk):
+        if not request.user.is_authenticated:
+            raise AuthenticationFailed('Требуется аунтетификация')
+
+        user = get_object_or_404(User, pk=pk)
+        user.activation_key = user.create_activation_key()
+        user.save()
+
+        return Response({'activation_key': user.activation_key})
