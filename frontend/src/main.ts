@@ -5,27 +5,28 @@
  */
 
 // Composables
-import { createApp } from 'vue'
-import router from './router'
-
-import { authStore } from './auth';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import router from './router';
+import { useAuthStore } from './auth';
 
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from '@/plugins';
 
 // Components
-import App from './App.vue'
+import App from './App.vue';
 
 // Styles
-import 'unfonts.css'
+import 'unfonts.css';
 
-const app = createApp(App)
+const pinia = createPinia();
+const app = createApp(App);
 
-// проверка авторизации
-await authStore.checkAuth();
+app.use(pinia);
+app.use(router);
 
-app.use(router)
+registerPlugins(app);
 
-registerPlugins(app)
+await useAuthStore().checkAuth()
 
-app.mount('#app')
+app.mount('#app');

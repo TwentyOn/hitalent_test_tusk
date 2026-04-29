@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-app-bar color="teal-darken-4" density="compact" v-bind:title="$route.meta.title">
-        <v-btn v-if="authStore.isAuthenticated()" v-on:click="authStore.logout()">выйти</v-btn>
+        <v-btn v-if="authStore.isAuthenticated" v-on:click="authStore.logout()">выйти</v-btn>
       </v-app-bar> 
       <RouterView></RouterView>
     </v-main >
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-  import { ref, provide, computed } from 'vue';
-  import { authStore } from './auth';
+  import { useAuthStore } from './auth';
 
+  const authStore = useAuthStore();
 </script>

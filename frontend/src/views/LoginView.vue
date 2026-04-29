@@ -16,11 +16,7 @@
                         v-model="credentials.password"
                         v-bind:rules="passwordRules"
                         type="password"></v-text-field>
-                        <v-btn color="success" v-bind:loading="loading" class="mt-2" type="submit" block>
-                            Войти
-
-                            <v-icon icon="mdi-chevron-right" end></v-icon>
-                        </v-btn>
+                        <send-button v-bind:loading="loading" btnText="Войти" />
                         <v-divider class="my-7">или</v-divider>
                         <v-btn to="register" class="mt-2" block>Создать аккаунт</v-btn>
                         <v-snackbar color="error" v-model="snackbar" timeout="5000">{{ error }}</v-snackbar>
@@ -33,9 +29,11 @@
 
 <script setup>
     import { ref, inject } from 'vue';
-    import { authStore } from '@/auth.ts';
+    import { useAuthStore } from '@/auth.ts';
     import router from '@/router';
+    import SendButton from '@/components/SendButton.vue';
 
+    const authStore = useAuthStore();
 
     const isValidForm = ref(false);
     const loading = ref(false);
@@ -50,18 +48,22 @@
 
 
     async function handle() {
-        if (isValidForm.value) {
+        try {
+            if (isValidForm.value) {
             loading.value = true
             const result = await authStore.login(credentials.value);
             if (result['success']) {
-                router.push({name: 'profile', params: {userId: 25}})
+                router.push({name: 'profile', params: {userId: authStore.decodeAccess.user_id}})
+                } 
+            }
+        } catch (error) {
+            alert(`Ошибка входа: ${error}`)
+        } finally {
+            loading.value = false
         }
-        loading.value = false
-        }
-        
     }
 
-        const emailRules = [
+    const emailRules = [
         value => {
             if (value) return true
             return "Введите e-mail"

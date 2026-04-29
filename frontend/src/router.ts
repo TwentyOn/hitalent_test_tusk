@@ -1,5 +1,5 @@
 import { createMemoryHistory, createRouter } from 'vue-router';
-import { authStore } from './auth';
+import { useAuthStore } from './auth'
 
 import ProfileView from './views/ProfileView.vue';
 import RegisterView from './views/RegisterView.vue';
@@ -18,12 +18,14 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
+    const authStore = useAuthStore()
+
     if (
         to.meta.requiresAuth &&
-        !authStore.isAuthenticated() &&
+        !authStore.isAuthenticated &&
         to.path !== '/login') {
         return { 'path': '/login' }
-    } else if (!to.meta.requiresAuth && authStore.isAuthenticated() && ['/login', '/register'].includes(to.path)) {
+    } else if (!to.meta.requiresAuth && authStore.isAuthenticated && ['/login', '/register'].includes(to.path)) {
         return false
     }
 });

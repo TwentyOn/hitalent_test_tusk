@@ -38,11 +38,10 @@
 
 <script setup>
     import { watch, computed, ref } from 'vue';
-    import { jwtDecode } from 'jwt-decode';
     import BaseForm from '@/components/BaseForm.vue';
-    import { authStore } from '@/auth';
+    import { useAuthStore } from '@/auth';
 
-    
+    const authStore = useAuthStore();
     const loading = ref(true);
     const user = ref({});
 
@@ -69,15 +68,22 @@
     }
 
 
-    watch(() => authStore.isAuthenticated(), async (newStatus) => {
-        if (newStatus) {
-            const userId = jwtDecode(authStore.accessToken)['user_id'];
-            user.value = await authStore.fetchUser(userId)
-            loading.value = false;
-        } else {
-            user.value = {}
-            loading.value = true;
+    watch(() => authStore.isAuthenticated, async (newStatus) => {
+        console.log('WATCH')
+        try {
+            if (newStatus) {
+                console.log(authStore.isAuthenticated)
+                user.value = await authStore.fetchUser()
+                loading.value = false;
+            } else {
+                user.value = {}
+                loading.value = true;
+            }
+        } catch (error) {
+            alert(`Не удалось загрузить профиль: ${error}`)
+            throw error
         }
+        
         
         
     },{immediate: true})

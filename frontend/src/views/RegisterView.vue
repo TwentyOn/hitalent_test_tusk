@@ -21,11 +21,7 @@
                         v-model="userData.password"
                         type="password"></v-text-field>
                         <v-text-field v-bind:rules="confPasswordRules" label="Подтвердите пароль" type="password"></v-text-field>
-                        <v-btn color="success" v-bind:loading="loading" class="mt-2" type="submit" block>
-                            Зарегистрироваться
-
-                            <v-icon icon="mdi-chevron-right" end></v-icon>
-                        </v-btn>
+                        <send-button v-bind:loading="loading" btnText="Зарегистрироваться" />
                         <v-divider class="my-7">или</v-divider>
                         <v-btn to="login" class="mt-2" block>Войти</v-btn>
                         <v-snackbar v-bind:color="snackColor" v-model="snackbar" timeout="5000">Письмо с ключом отправлено на почту</v-snackbar>
@@ -38,7 +34,8 @@
 
 <script setup>
     import { ref } from 'vue';
-    import { authStore } from '../auth.ts';
+    import { useAuthStore } from '../auth.ts';
+    import SendButton from '@/components/SendButton.vue';
 
     const email_error = ref('');
     const password_error = ref('');
@@ -61,6 +58,7 @@
     async function handle() {
         if (isValidForm.value) {
             try {
+                const authStore = useAuthStore()
                 loading.value = true;
                 const result = await authStore.register(userData.value);
                 if (result['success']) {
@@ -71,49 +69,13 @@
                     password_error.value = errors.password;
                 }
             } catch (error) {
-                console.log(error)
-                snackColor.value = 'error';
-                snackbar.value = true;
-                snackColor.value = 'success'
+                alert(`Ошибка регистрации: ${error}`)
             } finally {
                 loading.value = false;
             }
             
         }
     }
-
-    // async function clear_errors() {
-    //     email_error.value = '';
-    //     password_error.value = '';
-    // }
-
-    // async function handle() {
-    //     await clear_errors();
-
-    //     if (isValidForm.value) {
-    //         loading.value = true
-    //         try {
-    //             const result = await register(userData.value)
-    //             if (result.status === 200) {
-                    
-    //                 snackbar.value = true;
-
-    //             } else if (result.status === 400) {
-    //                 const errors = await result.json()
-    //                 email_error.value = errors['email']
-    //                 password_error.value = errors['password']
-    //             } else {
-    //                 throw new Error(`${result.status} ${result.statusText}`)
-    //             }
-    //         } catch (error) {
-    //             alert('Ошибка запроса: ' + error.message)
-                
-    //         } finally {
-    //             loading.value = false
-    //         }
-    //     }
-        
-    // }
 
     const emailRules = [
         value => {
