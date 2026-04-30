@@ -4,7 +4,11 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-app = Celery('hello', broker='redis://localhost', broker_connection_retry=False,
-             broker_connection_retry_on_startup=True, )
+app = Celery(
+    'email_sender',
+    broker_connection_retry=False,
+    broker_connection_retry_on_startup=True,
+)
+
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
