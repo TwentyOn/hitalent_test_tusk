@@ -8,7 +8,7 @@ def send_activation_key(email, activation_key):
         'Сервис прокси-доступа',
         'Здравствуйте!\n\n'
         f'Ваш новый ключ активации: {activation_key}\n\n'
-        'Желаем приятного пользования!',
+        'Желаем приятного использования!',
         'proxyservice@domen.ru',
         [email]
     )
