@@ -6,7 +6,8 @@ from .tasks import send_activation_key
 
 
 @receiver(post_save, sender=User)
-def update_key(sender, instance, *args, **kwargs):
-    email = instance.email
-    activation_key = instance.activation_key
-    send_activation_key.delay(email, activation_key)
+def update_key(created, instance, *args, **kwargs):
+    if created:
+        email = instance.email
+        activation_key = instance.activation_key
+        send_activation_key.delay(email, activation_key)
