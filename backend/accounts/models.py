@@ -26,5 +26,8 @@ class User(AbstractBaseUser):
     def create_activation_key():
         return uuid.uuid4()
 
+    class Meta:
+        verbose_name = 'Пользователь'
+
     def __str__(self):
         return self.email
