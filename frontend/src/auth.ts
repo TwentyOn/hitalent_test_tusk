@@ -47,6 +47,10 @@ export const useAuthStore = defineStore('auth', {
             });
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    const errors = await response.json()
+                    return { success: false, errors: errors }
+                }
                 throw new Error(`${response.status}: ${response.statusText}`)
             }
 
