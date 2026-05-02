@@ -4,32 +4,26 @@
             <v-col cols="12" md="8" lg="6">
                 <v-card>
                     <v-card-title>Личный кабинет</v-card-title>
-                    <v-list-item v-if="loading" title="загрузка...">
-                        <template #prepend>
-                            <v-icon icon="mdi-loading" />
-                        </template>
-                    </v-list-item>
-                    <v-list-item v-else v-bind:title="user['email']">
-                        <template #prepend>
-                            <v-icon icon="mdi-email" />
-                            <p>E-mail:</p>
-                        </template>
-                    </v-list-item>
-                        <v-list-item v-if="loading" title="загрузка...">
-                        <template #prepend>
-                            <v-icon icon="mdi-loading" />
-                        </template>
-                    </v-list-item>
-                    <template v-else>
-                        <v-list-item v-bind:title="user['activation_key']">
-                        <template #prepend>
-                            <v-icon icon="mdi-key" />
-                        </template>
-                        <template #append>
-                            <v-btn v-on:click="getNewActivationKey">Обновить ключ</v-btn>
-                        </template>
-                    </v-list-item>
-                    </template >
+                    <v-card-item>
+                        <v-card-text class="mb-7"><v-icon icon="mdi-email" /> E-mail: {{ user.email }}</v-card-text>
+                        <v-btn color="info" v-on:click="getNewActivationKey">Обновить ключ активации</v-btn>
+                    </v-card-item>
+                    <v-card-item>
+                        <v-card class="border" flat>
+                            <v-card-title class="text-h5 text-center mb-4">
+                                Смена пароля
+                            </v-card-title>
+                            <v-card-text>
+                                <v-form >
+                                    <v-text-field label="Текущий пароль"></v-text-field>
+                                    <v-text-field label="Новый пароль"></v-text-field>
+                                    <v-text-field label="Подтвердите новый пароль"></v-text-field>
+                                    <send-button btn-text="Изменить пароль" :loading="pass"></send-button>
+                                </v-form>
+                            </v-card-text>
+                        </v-card>
+                    </v-card-item>
+                    <send-mail-snackbar v-model="snackbar"/>
                 </v-card>
             </v-col>
         </v-row>
@@ -37,42 +31,41 @@
 </template>
 
 <script setup>
-    import { watch, computed, ref } from 'vue';
-    import BaseForm from '@/components/BaseForm.vue';
+    import { watch, ref } from 'vue';
     import { useAuthStore } from '@/auth';
+    import SendButton from '@/components/SendButton.vue';
+    import sendMailSnackbar from '@/components/sendMailSnackbar.vue';
 
     const authStore = useAuthStore();
     const loading = ref(true);
+    const pass = ref(false)
     const user = ref({});
+    const snackbar = ref(false)
 
         async function getNewActivationKey() {
-        try {
-            const response = await fetch(import.meta.env.VITE_API_URL + `${authStore.user_id()}/`, {
-                'method': 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${authStore.accessToken}`,
-                    'Content-Type': 'application/json'
-                },
-            })
-            
-            if (!response.ok) {
-                throw Error()
-            }
-            
-            const content = await response.json()
-            user.value['activation_key'] = content['activation_key']
+            try {
+                const response = await fetch(import.meta.env.VITE_API_URL + `${authStore.decodeAccess['user_id']}/update-key/`, {
+                    'method': 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authStore.accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                })
+                
+                if (!response.ok) {
+                    throw new Error(`${response.status}: {response.statusText}`)
+                }
+                snackbar.value = true;
 
-        } catch (error) {
-            alert(`Ошибка при изменини ключа: ${response.status}: {response.statusText}`)
-        }
+            } catch (error) {
+                alert(`Ошибка при изменении ключа: ${error}`)
+            }
     }
 
-
+    // todo: возможно надо убрать
     watch(() => authStore.isAuthenticated, async (newStatus) => {
-        console.log('WATCH')
         try {
             if (newStatus) {
-                console.log(authStore.isAuthenticated)
                 user.value = await authStore.fetchUser()
                 loading.value = false;
             } else {
