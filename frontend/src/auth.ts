@@ -1,7 +1,5 @@
 import router from './router.ts';
-import { inject, reactive, computed, watch } from 'vue';
 import { jwtDecode } from 'jwt-decode';
-import { th, tr } from 'vuetify/locale';
 import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
