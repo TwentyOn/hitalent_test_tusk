@@ -6,7 +6,7 @@
                     Вход
                 </v-card-title>
                 <v-card-text>
-                    <v-form v-model="isValidForm" v-on:submit.prevent="handle">
+                    <v-form v-model="formValid" v-on:submit.prevent="handleSubmit">
                         <v-text-field 
                         label="E-mail" 
                         v-model="credentials.email"
@@ -28,14 +28,15 @@
 </template>
 
 <script setup>
-    import { ref, inject } from 'vue';
+    import { ref } from 'vue';
     import { useAuthStore } from '@/auth.ts';
-    import router from '@/router';
+    import { useRouter } from 'vue-router';
     import SendButton from '@/components/SendButton.vue';
 
+    const router = useRouter()
     const authStore = useAuthStore();
 
-    const isValidForm = ref(false);
+    const formValid = ref(false);
     const loading = ref(false);
 
     const snackbar = ref(false);
@@ -47,14 +48,18 @@
     })
 
 
-    async function handle() {
+    async function handleSubmit() {
         try {
-            if (isValidForm.value) {
+            if (formValid.value) {
             loading.value = true
             const result = await authStore.login(credentials.value);
+            console.log(result['success'])
             if (result['success']) {
                 router.push({name: 'profile', params: {userId: authStore.decodeAccess.user_id}})
-                } 
+                } else {
+                error.value = result.errors?.detail
+                snackbar.value = true
+            }
             }
         } catch (error) {
             alert(`Ошибка входа: ${error}`)
