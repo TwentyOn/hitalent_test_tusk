@@ -57,7 +57,7 @@
             if (result['success']) {
                 router.push({name: 'profile', params: {userId: authStore.decodeAccess.user_id}})
                 } else {
-                error.value = result.errors?.detail
+                error.value = result.error.detail
                 snackbar.value = true
             }
             }
