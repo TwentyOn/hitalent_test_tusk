@@ -12,5 +12,5 @@ urlpatterns = [
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/blacklist/', TokenBlacklistView.as_view()),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('<int:user_id>/update-key/', ActivationKeyView.as_view())
+    path('<int:id>/update-key/', ActivationKeyView.as_view())
 ] + router.urls
