@@ -1,15 +1,16 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
-from .permissions import UserOwnerPermission
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 
 from .models import User
 from .serializers import UserSerializer, ChangePasswordSerializer
 from .tasks import send_activation_key
+from .permissions import UserOwnerPermission
 
 
 # Create your views here.
@@ -46,14 +47,32 @@ class UserView(GenericViewSet):
 
 class ActivationKeyView(APIView):
     permission_classes = [UserOwnerPermission]
+    serializer_class = None
 
-    def post(self, request, user_id):
+    @extend_schema(responses={
+        404: OpenApiResponse(
+            response={
+                'type': 'object',
+                'properties': {
+                    'detail': {'type': 'string', 'default': 'описание ошибки'}
+                }
+            },
+            description='Ошибка поиска пользователя по ID'
+        ),
+        200: OpenApiResponse(
+            response={
+                'type': 'object',
+                'properties': {
+                    'activation_key': {'type': 'string', 'default': 'новый ключ активации'}
+                }
+            }
+        )
+    })
+    def post(self, request, id):
         """
         Обновление ключа пользователя
-        :param request:
-        :return:
         """
-        user = get_object_or_404(User, pk=user_id)
+        user = get_object_or_404(User, pk=id)
 
         activation_key = user.create_activation_key()
         user.activation_key = activation_key
