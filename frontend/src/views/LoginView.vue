@@ -50,7 +50,6 @@
             if (formValid.value) {
             loading.value = true
             const result = await authStore.login(credentials.value);
-            console.log(result['success'])
             if (result['success']) {
                 router.push({name: 'profile', params: {userId: authStore.decodeAccess.user_id}})
                 } else {
