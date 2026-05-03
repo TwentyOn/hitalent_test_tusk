@@ -174,6 +174,7 @@ export const useAuthStore = defineStore('auth', {
                 return true;
             } else {
                 console.log('не удалось обновить токен: ', response.status, response.statusText)
+                this.logout()
                 return false
             }
         },
