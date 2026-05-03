@@ -1,10 +1,10 @@
 <template>
-    <v-container class="fill-height d-flex flex-column justify-center" fluid>
-        <v-sheet width="300" class="mx-auto">
-            <v-card flat>
+    <form-container>
+        <v-card flat>
                 <v-card-title class="text-h5 text-center mb-4">
                     Регистрация
                 </v-card-title>
+                <v-divider class="my-3" />
                 <v-card-text>
                     <v-form v-model="formValid" v-on:submit.prevent="handleSubmit">
                         <v-text-field 
@@ -28,8 +28,7 @@
                     </v-form>
                 </v-card-text>
             </v-card>
-        </v-sheet>
-    </v-container>
+    </form-container>
 </template>
 
 <script setup>
@@ -38,6 +37,7 @@
     import { useAuthStore } from '../auth.ts';
     import SendButton from '@/components/SendButton.vue';
     import sendMailSnackbar from '@/components/SendMailSnackbar.vue';
+    import FormContainer from '@/components/FormContainer.vue';
 
     const router = useRouter();
     const authStore = useAuthStore();
