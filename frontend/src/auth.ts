@@ -46,8 +46,8 @@ export const useAuthStore = defineStore('auth', {
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    const errors = await response.json()
-                    return { success: false, errors: errors }
+                    const error = await response.json()
+                    return { success: false, error: error }
                 }
                 throw new Error(`${response.status}: ${response.statusText}`)
             }
@@ -96,6 +96,28 @@ export const useAuthStore = defineStore('auth', {
             router.push({ name: 'login' })
         },
 
+        async changePassword(oldPassword: string, newPassword: string) {
+            const userId = this.decodeAccess['user_id']
+            const response = await fetch(import.meta.env.VITE_API_URL + `${userId}/change-password/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + this.accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'old_password': oldPassword, 'new_password': newPassword })
+            })
+
+            if (!response.ok) {
+                if (response.status === 400) {
+                    const errors = await response.json()
+                    return { success: false, errors: errors }
+                }
+                throw new Error(`${response.status}: ${response.statusText}`)
+            }
+
+            return { success: true }
+        },
+
         async fetchUser() {
             const userId = this.decodeAccess['user_id']
             const response = await fetch(import.meta.env.VITE_API_URL + userId, {
@@ -105,11 +127,14 @@ export const useAuthStore = defineStore('auth', {
                 },
             })
 
-            if (response.ok) {
-                const user = await response.json()
-                return user
+            if (!response.ok) {
+                if (response.status === 401) {
+                    this.logout()
+                }
             }
 
+            const user = await response.json()
+            return user
         },
 
         async checkAuth() {
@@ -151,6 +176,6 @@ export const useAuthStore = defineStore('auth', {
                 console.log('не удалось обновить токен: ', response.status, response.statusText)
                 return false
             }
-        }
+        },
     }
 })
