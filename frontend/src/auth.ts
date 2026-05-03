@@ -88,11 +88,24 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async logout() {
+            const response = await fetch(import.meta.env.VITE_API_URL + 'token/blacklist/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + this.accessToken,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 'refresh': this.refreshToken })
+            })
+
+            if (!response.ok) {
+                console.log(`Ошибка logout: ${response.status}`)
+            }
+
             this.accessToken = '';
             this.refreshToken = '';
-
             localStorage.removeItem('token');
             localStorage.removeItem('refresh');
+
             router.push({ name: 'login' })
         },
 
