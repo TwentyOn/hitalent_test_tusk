@@ -2,7 +2,7 @@
     <v-container class="mx-auto fill-height">
         <v-row justify="center">
             <v-col cols="12" md="8" lg="6">
-                <v-card class="profile-card">
+                <v-card class="profile-card" :loading="loading">
                     <v-card-title>Персональные данные</v-card-title>
                     <v-card-item>
                         <div class="d-flex align-center justify-space-between mb-4">
