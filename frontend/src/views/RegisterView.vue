@@ -23,7 +23,7 @@
                         <v-text-field v-bind:rules="confPasswordRules" label="Подтвердите пароль" type="password"></v-text-field>
                         <send-button v-bind:disabled="!formValid" v-bind:loading="loading" btnText="Зарегистрироваться" />
                         <v-divider class="my-7">или</v-divider>
-                        <v-btn to="login" class="mt-2" block>Войти</v-btn>
+                        <v-btn to="login" class="mt-2" block border>Войти</v-btn>
                         <send-mail-snackbar v-model="snackbar"/>
                     </v-form>
                 </v-card-text>

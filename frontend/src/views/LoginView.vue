@@ -18,7 +18,7 @@
                         type="password"></v-text-field>
                         <send-button v-bind:loading="loading" btnText="Войти" />
                         <v-divider class="my-7">или</v-divider>
-                        <v-btn to="register" class="mt-2" block>Создать аккаунт</v-btn>
+                        <v-btn to="register" class="mt-2" block border>Создать аккаунт</v-btn>
                         <v-snackbar color="error" v-model="snackbar" timeout="3000">{{ error }}</v-snackbar>
                     </v-form>
                 </v-card-text>
