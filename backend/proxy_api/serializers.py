@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.db import transaction
 
 from .models import VirtualMachine
 
@@ -26,12 +27,14 @@ class ActivateVmSerializer(serializers.Serializer):
             raise serializers.ValidationError('Все прокси заняты')
 
         user = self.context['user']
-        user.activation_key = None
-        user.save()
 
-        vm.current_user = user
-        vm.last_used_at = timezone.now()
-        vm.save()
+        with transaction.atomic():
+            user.activation_key = None
+            user.save()
+
+            vm.current_user = user
+            vm.last_used_at = timezone.now()
+            vm.save()
 
         return vm
 
@@ -39,5 +42,6 @@ class ActivateVmSerializer(serializers.Serializer):
         return {
             'host': instance.host,
             'port': instance.port,
-            'protocol': instance.protocol
+            'protocol': instance.protocol,
+            'user_id': instance.current_user.pk,
         }
