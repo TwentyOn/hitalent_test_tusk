@@ -16,7 +16,7 @@ class VirtualMachine(models.Model):
     protocol = models.CharField(validators=[protocol_validator])
     is_active = models.BooleanField(default=True)
     current_user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
-    last_used_at = models.DateTimeField(null=True, auto_now=True)
+    last_used_at = models.DateTimeField(null=True)
 
     def save(self, *args, **kwargs):
         self.full_clean()
