@@ -1,13 +1,12 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .serializers import ActivateVmSerializer
 
 
 # Create your views here.
-class Test(APIView):
+class ActivateKeyView(APIView):
     def post(self, request):
-        print(request.data)
-        return Response({'message': 'ok'})
-
-
-
+        serializer = ActivateVmSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)

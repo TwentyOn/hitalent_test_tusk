@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import Test
+from .views import ActivateKeyView
 
 urlpatterns = [
-    # path('register/', Test.as_view())
+    path('activate-key/', ActivateKeyView.as_view())
 ]
