@@ -133,7 +133,7 @@ export const useAuthStore = defineStore('auth', {
 
         async fetchUser() {
             const userId = this.decodeAccess['user_id']
-            const response = await fetch(import.meta.env.VITE_API_URL + userId, {
+            const response = await fetch(import.meta.env.VITE_API_URL + `${userId}/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + this.accessToken
