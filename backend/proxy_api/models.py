@@ -18,10 +18,14 @@ class VirtualMachine(models.Model):
     current_user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
     last_used_at = models.DateTimeField(null=True)
 
+    class Meta:
+        db_table = f'{settings.DB_SCHEMA_NAME}"."virtual_machine'
+        unique_together = [('host', 'port', 'protocol')]
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
 
-    class Meta:
-        db_table = f'{settings.DB_SCHEMA_NAME}"."virtual_machine'
-        unique_together = [('host', 'port', 'protocol')]
+    def release(self):
+        self.current_user = None
+        self.save()
