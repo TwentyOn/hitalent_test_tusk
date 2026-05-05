@@ -126,6 +126,7 @@
 
     async function getNewActivationKey() {
         try {
+            await authStore.checkAuth()
             const response = await fetch(import.meta.env.VITE_API_URL + `${authStore.decodeAccess['user_id']}/update-key/`, {
                 'method': 'POST',
                 headers: {
@@ -135,7 +136,7 @@
             })
                 
             if (!response.ok) {
-                throw new Error(`${response.status}: {response.statusText}`)
+                throw new Error(`${response.status}: ${response.statusText}`)
             }
             keySnackbar.value = true;
             const content = await response.json()
