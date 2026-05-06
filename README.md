@@ -24,7 +24,7 @@ http://localhost:8000/api/schema/swagger-ui/
 ## Требования к переменным окружения
 Со структурой переменных коружения можно ознакомиться в файле [docker-compose.yaml](docker-compose.yaml)
 
-## Запуск
+## Запуск веб приложения
 
 1. клонирование репозитория
 ```commandline
@@ -44,4 +44,26 @@ docker compose exec -it backend python manage.py test
 4. Остановка docker-compose
 ```commandline
 python main.py
+```
+
+## Запуск настольного приложения
+1. перейти в директорию приложения
+```commandline
+cd desktop
+```
+2. создать и активировать вирутальное окружение
+```commandline
+python -m venv .venv && .venv\Scripts\activate
+```
+3. установить зависимости
+```commandline
+pip install -r requirements.txt
+```
+4. запустить приложение
+```commandline
+python main.py
+```
+5. деативация окружения
+```commandline
+deativate
 ```
