@@ -9,7 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['email', 'password', 'activation_key', 'activation_key_expires']
         extra_kwargs = {
             'activation_key': {'read_only': True},
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'activation_key_expires': {'read_only': True}
         }
 
     def validate_password(self, password):
