@@ -128,7 +128,7 @@
         try {
             await authStore.checkAuth()
             const response = await fetch(import.meta.env.VITE_API_URL + `${authStore.decodeAccess['user_id']}/update-key/`, {
-                'method': 'POST',
+                'method': 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${authStore.accessToken}`,
                     'Content-Type': 'application/json'

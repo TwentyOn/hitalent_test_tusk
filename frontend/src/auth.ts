@@ -112,7 +112,7 @@ export const useAuthStore = defineStore('auth', {
         async changePassword(oldPassword: string, newPassword: string) {
             const userId = this.decodeAccess['user_id']
             const response = await fetch(import.meta.env.VITE_API_URL + `${userId}/change-password/`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + this.accessToken,
                     'Content-Type': 'application/json'
