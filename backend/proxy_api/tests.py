@@ -12,8 +12,8 @@ class ActivateKeyViewTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.vm1 = VirtualMachine.objects.create(name='test1', host='203.236.197.76', port=8080, protocol='http')
-        self.vm2 = VirtualMachine.objects.create(name='test2', host='186.174.48.132', port=8080, protocol='https')
-        self.vm3 = VirtualMachine.objects.create(name='test3', host='209.191.114.209', port=8080, protocol='socks5')
+        self.vm2 = VirtualMachine.objects.create(name='test2', host='186.144.48.132', port=8080, protocol='https')
+        self.vm3 = VirtualMachine.objects.create(name='test3', host='209.161.114.209', port=8080, protocol='socks5')
         self.user = get_user_model().objects.create(email='test@mail.ru', password='09testpassword')
 
     def test_activate_key(self):
