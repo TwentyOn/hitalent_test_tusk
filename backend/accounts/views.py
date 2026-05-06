@@ -41,7 +41,7 @@ class UserView(GenericViewSet):
 
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, url_path='change-password', serializer_class=ChangePasswordSerializer)
+    @action(methods=['patch'], detail=True, url_path='change-password', serializer_class=ChangePasswordSerializer)
     def change_password(self, request, pk):
         """
         Изменение пароля пользователя
@@ -77,11 +77,11 @@ class UpdateKeyView(APIView):
             }
         )
     })
-    def post(self, request, id):
+    def patch(self, request, pk):
         """
         Обновление ключа пользователя
         """
-        user = get_object_or_404(User, pk=id)
+        user = get_object_or_404(User, pk=pk)
 
         activation_key = user.create_activation_key()
         user.activation_key = activation_key
