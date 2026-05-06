@@ -1,0 +1,55 @@
+/* Заголовок */
+QLabel#title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2d3748;
+    padding: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+/* Поле ввода */
+QLineEdit#input {
+    padding: 12px;
+    font-size: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+QLineEdit#input:focus {
+        border-color: #667eea;
+        outline: none;
+    }
+
+/* Кнопка */
+QPushButton#btn {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop:0 #667eea, stop:1 #764ba2);
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+QPushButton#btn:hover {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop:0 #5a67d8, stop:1 #6b46c1);
+        transform: scale(1.02);
+    }
+
+QPushButton#btn:pressed {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop:0 #4c51bf, stop:1 #553c9a);
+    }
+
+/* Статус */
+QLabel#status {
+        color: #718096;
+        font-size: 14px;
+        padding: 10px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
