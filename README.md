@@ -80,3 +80,7 @@ deativate
 ## Демонстрация работы
 1. Веб-интерфейс
     - Окно регистрации ![register.png](docs%2Fregister.png)
+    - Форма входа ![login.png](docs%2Flogin.png)
+    - Интерфейс личного кабинета ![profile_view.png](docs%2Fprofile_view.png)
+    - главное окно настольного приложения ![desktop.png](docs%2Fdesktop.png)
+    - окно подключения настолько приложения ![desktop.png](docs%2Fdesktop.png)
