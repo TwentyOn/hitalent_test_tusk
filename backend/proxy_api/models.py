@@ -16,7 +16,7 @@ class VirtualMachine(models.Model):
     protocol = models.CharField(validators=[protocol_validator])
     is_active = models.BooleanField(default=True)
     current_user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
-    last_used_at = models.DateTimeField(null=True)
+    last_used_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = f'{settings.DB_SCHEMA_NAME}"."virtual_machine'
