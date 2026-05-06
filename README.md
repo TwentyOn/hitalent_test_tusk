@@ -78,12 +78,28 @@ deativate
 ```
 
 ## Демонстрация работы
-1. Окно регистрации ![register.png](docs%2Fregister.png)
-2. Форма входа ![login.png](docs%2Flogin.png)
-3. Интерфейс личного кабинета ![profile_view.png](docs%2Fprofile_view.png)
+
+[2026-05-07 02-04-03.mp4](docs%2F2026-05-07%2002-04-03.mp4)
+
+1. Окно регистрации
+
+![register.png](docs%2Fregister.png)
+2. Форма входа
+
+![login.png](docs%2Flogin.png)
+
+
+3. Интерфейс личного кабинета
+
+![profile_view.png](docs%2Fprofile_view.png)
+
+
 4. главное окно настольного приложения 
 
 ![desktop.png](docs%2Fdesktop.png)
-5. окно подключения настолько приложения
+
+
+5. окно подключения настольного приложения
 
 ![desktop.png](docs%2Fdesktop.png)
+
