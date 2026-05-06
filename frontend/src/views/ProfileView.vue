@@ -73,7 +73,7 @@
                                 </v-sheet>
                             </v-card-text>
                     </v-card-item>
-                    <send-mail-snackbar v-model="keySnackbar"/>
+                    <SendMailSnackbar v-model="keySnackbar"/>
                     <v-snackbar v-model="changePassSnackbar" color="success" timeout="4000">Пароль успешно изменен</v-snackbar>
                 </v-card>
             </v-col>
@@ -85,7 +85,7 @@
     import { watch, ref, reactive } from 'vue';
     import { useAuthStore } from '@/auth';
     import SendButton from '@/components/SendButton.vue';
-    import sendMailSnackbar from '@/components/sendMailSnackbar.vue';
+    import SendMailSnackbar from '@/components/SendMailSnackbar.vue';
 
     const authStore = useAuthStore();
     const loading = ref(true);
