@@ -80,13 +80,13 @@ class ProxyWindow(QMainWindow):
         Слот для сигнала нажатия кнопки соединения
         """
         try:
-            self.conn_button.setEnabled(False)
             activation_key = self.input_field.text()
 
             if not activation_key:
                 QMessageBox.information(self, 'Внимание', 'Введите ключ активации')
                 return
 
+            self.conn_button.setEnabled(False)
             self.act_key_worker = KeyActivateWorker(activation_key)
             self.act_key_thread = QThread()
             self.act_key_worker.moveToThread(self.act_key_thread)
@@ -182,7 +182,9 @@ class ProxyWindow(QMainWindow):
         """
         self.conn_button.setEnabled(True)
 
-app = QApplication(sys.argv)
-window = ProxyWindow()
-window.show()
-sys.exit(app.exec())
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = ProxyWindow()
+    window.show()
+    sys.exit(app.exec())
