@@ -4,7 +4,7 @@ from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-from .models import VirtualMachine
+from proxy_api.models import VirtualMachine
 
 
 # Create your tests here.
