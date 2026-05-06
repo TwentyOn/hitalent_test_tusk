@@ -24,12 +24,18 @@ class UserView(GenericViewSet):
         return [permissions.AllowAny()]
 
     def create(self, request):
+        """
+        Регистрация пользователя
+        """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk):
+        """
+        Получения данных пользователя
+        """
         user = self.get_object()
         serializer = self.get_serializer(user)
 
@@ -37,6 +43,9 @@ class UserView(GenericViewSet):
 
     @action(methods=['post'], detail=True, url_path='change-password', serializer_class=ChangePasswordSerializer)
     def change_password(self, request, pk):
+        """
+        Изменение пароля пользователя
+        """
         user = self.get_object()
         serializer = self.get_serializer(data=request.data, context={'user': user})
 
@@ -45,7 +54,7 @@ class UserView(GenericViewSet):
             return Response({'message': 'успех'})
 
 
-class ActivationKeyView(APIView):
+class UpdateKeyView(APIView):
     permission_classes = [UserOwnerPermission]
     serializer_class = None
 
