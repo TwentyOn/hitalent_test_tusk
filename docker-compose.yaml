@@ -26,15 +26,27 @@ services:
         python manage.py migrate &&
         python -m gunicorn core.asgi:application -k uvicorn_worker.UvicornWorker --bind 0.0.0.0:8000
       "
+
   celery_worker:
     build: ./backend/
     environment:
+      SECRET_KEY: "django-insecure-ycdl04q628cgqgrtmd3pju2*bpyq6395sxgpx#%$g2-p=uzu0c"
       REDIS_HOST: "redis"
       REDIS_PORT: "6379"
     depends_on:
       redis:
         condition: service_healthy
     command: celery -A core.celery worker --loglevel=info
+
+  frontend:
+    build: ./frontend/
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    environment:
+      VITE_API_URL: "http://localhost:8000/api/accounts/"
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
   api_db:
     image:
