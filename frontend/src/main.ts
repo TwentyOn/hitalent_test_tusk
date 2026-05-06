@@ -7,8 +7,8 @@
 // Composables
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import router from './router';
-import { useAuthStore } from './auth';
+import router from './router.ts';
+import { useAuthStore } from './auth.ts';
 
 // Plugins
 import { registerPlugins } from '@/plugins';

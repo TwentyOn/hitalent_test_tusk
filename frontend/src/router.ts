@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import { useAuthStore } from './auth'
 
-import ProfileView from './views/ProfileView.vue';
-import RegisterView from './views/RegisterView.vue';
-import LoginView from './views/LoginView.vue';
+import ProfileView from '@/views/ProfileView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import LoginView from '@/views/LoginView.vue';
 
 const routes = [
     { path: '/', redirect: 'profile' },
@@ -31,7 +31,7 @@ router.beforeEach(async (to, from) => {
 
 router.afterEach(async (to) => {
     const title = to.meta?.title || 'Прокси сервис'
-    document.title = title
+    document.title = String(title)
 });
 
 export default router;
