@@ -1,6 +1,7 @@
 # backend
 .idea/
 __pycache__/
+media
 
 # frontend
 node_modules

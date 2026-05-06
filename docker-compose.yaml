@@ -1,30 +1,59 @@
 volumes:
-  pg_data:
+  api_pg_data:
 services:
   backend:
     build: ./backend/
+    environment:
+      SECRET_KEY: "django-insecure-ycdl04q628cgqgrtmd3pju2*bpyq6395sxgpx#%$g2-p=uzu0c"
+      DB_NAME: "postgres"
+      DB_USER: 'postgres'
+      DB_PASSWORD: "45652jkl"
+      DB_HOST: "api_db"
+      DB_PORT: "5432"
+      DB_SCHEMA: "proxy_service"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
     ports:
       - 8000:8000
     depends_on:
-      db:
+      api_db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+
     command: >
       sh -c "
         python manage.py migrate &&
-        python manage.py runserver 0.0.0.0:8000
+        python -m gunicorn core.asgi:application -k uvicorn_worker.UvicornWorker --bind 0.0.0.0:8000
       "
-  db:
+  celery_worker:
+    build: ./backend/
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: celery -A core.celery worker --loglevel=info
+
+  api_db:
     image:
       postgres:18
-    container_name: db
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
-      POSTGRES_PASSWORD: 45652jkl
-      volumes: pg_data:/var/lib/postgresql
+      POSTGRES_PASSWORD: "45652jkl"
+      volumes: api_pg_data:/var/lib/postgresql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
       start_period: 5s
+  redis:
+    image: redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
