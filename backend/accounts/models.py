@@ -1,7 +1,9 @@
 import uuid
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, UserManager
+from django.contrib.auth.models import AbstractBaseUser
+
+from .managers import CustomUserManager
 
 
 # Create your models here.
@@ -15,7 +17,7 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
-    objects = UserManager()
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = 'Пользователь'
