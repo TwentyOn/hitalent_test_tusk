@@ -11,7 +11,9 @@
 http://localhost:8000/api/schema/swagger-ui/
  - фронтенд доступен по адресу: http://localhost:3000
 
-Более детальная информация доступна в [docker-compose.yaml](docker-compose.yaml)
+К БД можно подключиться с порта 5433, параметры подключения можно найти
+в параметрах окружения
+[docker-compose.yaml](docker-compose.yaml)
 
 
 ## Структура проекта
@@ -46,10 +48,14 @@ docker compose exec -it backend python manage.py test
 ```
 4. Остановка docker-compose
 ```commandline
-python main.py
+docker compose stop
 ```
 
 ## Запуск настольного приложения
+### Способ 1 (только windows)
+1. Запустить исполняемый файл [main.exe](desktop%2Fbuild%2Fexe.win-amd64-3.14%2Fmain.exe)
+по пути desktop/build/exe.win-amd64-3.14
+### Способ 2
 1. перейти в директорию приложения
 ```commandline
 cd desktop
@@ -70,3 +76,7 @@ python main.py
 ```commandline
 deativate
 ```
+
+## Демонстрация работы
+1. Веб-интерфейс
+    - Окно регистрации ![register.png](docs%2Fregister.png)
