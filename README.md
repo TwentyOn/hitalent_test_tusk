@@ -80,7 +80,7 @@ deativate
 ## Демонстрация работы
 
 ### Демо-видео
-![2026-05-07 02-04-03.mp4](docs%2F2026-05-07%2002-04-03.mp4)
+[2026-05-07 02-04-03.mp4](docs%2F2026-05-07%2002-04-03.mp4)
 
 ### Скриншоты
 
@@ -104,5 +104,5 @@ deativate
 
 5. окно подключения настольного приложения
 
-![desktop.png](docs%2Fdesktop.png)
+![desktop_connected.png](docs%2Fdesktop_connected.png)
 
