@@ -65,6 +65,15 @@ docker compose exec -it backend python manage.py test
 docker compose stop
 ```
 
+После запуска веб-приложения:
+ - фронтенд доступен по адресу: http://localhost
+ - OpenAPI-схема доступна по адресу:
+http://localhost/api/schema/swagger-ui/
+
+К БД можно подключиться с порта 5433, параметры подключения можно найти
+в параметрах окружения
+[docker-compose.yaml](docker-compose.yaml)
+
 ## Запуск настольного приложения
 ### Способ 1 (только windows)
 1. Запустить исполняемый файл [main.exe](desktop%2Fbuild%2Fexe.win-amd64-3.14%2Fmain.exe)
@@ -90,15 +99,6 @@ python main.py
 ```commandline
 deativate
 ```
-
-После запуска проекта:
- - фронтенд доступен по адресу: http://localhost
- - OpenAPI-схема доступна по адресу:
-http://localhost/api/schema/swagger-ui/
-
-К БД можно подключиться с порта 5433, параметры подключения можно найти
-в параметрах окружения
-[docker-compose.yaml](docker-compose.yaml)
 
 ## Демонстрация работы
 
