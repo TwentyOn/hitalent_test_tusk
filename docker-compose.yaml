@@ -13,8 +13,6 @@ services:
       DB_SCHEMA: "proxy_service"
       REDIS_HOST: "redis"
       REDIS_PORT: "6379"
-    ports:
-      - 8000:8000
     depends_on:
       api_db:
         condition: service_healthy
@@ -39,14 +37,16 @@ services:
     command: celery -A core.celery worker --loglevel=info
 
   frontend:
-    build: ./frontend/
+    build:
+      context: ./frontend/
+      args:
+        VITE_API_URL: "http://localhost/api/accounts/"
+
     depends_on:
       - backend
     ports:
-      - 3000:3000
-    environment:
-      VITE_API_URL: "http://localhost:8000/api/accounts/"
-    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+      - 80:80
+    #command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
   api_db:
     image:
