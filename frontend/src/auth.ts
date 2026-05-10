@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
+        base_url: import.meta.env.VITE_API_URL,
         accessToken: localStorage.getItem('token') || '',
         refreshToken: localStorage.getItem('refresh') || '',
     }),
@@ -36,7 +37,7 @@ export const useAuthStore = defineStore('auth', {
 
     actions: {
         async login(credentials: object) {
-            const response = await fetch(import.meta.env.VITE_API_URL + 'token/', {
+            const response = await fetch(this.base_url + 'token/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -63,7 +64,7 @@ export const useAuthStore = defineStore('auth', {
 
         async register(userData: object) {
             try {
-                const response = await fetch(import.meta.env.VITE_API_URL, {
+                const response = await fetch(this.base_url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -88,7 +89,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async logout() {
-            const response = await fetch(import.meta.env.VITE_API_URL + 'token/blacklist/', {
+            const response = await fetch(this.base_url + 'token/blacklist/', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + this.accessToken,
@@ -111,7 +112,7 @@ export const useAuthStore = defineStore('auth', {
 
         async changePassword(oldPassword: string, newPassword: string) {
             const userId = this.decodeAccess['user_id']
-            const response = await fetch(import.meta.env.VITE_API_URL + `${userId}/change-password/`, {
+            const response = await fetch(this.base_url + `${userId}/change-password/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': 'Bearer ' + this.accessToken,
@@ -133,7 +134,7 @@ export const useAuthStore = defineStore('auth', {
 
         async fetchUser() {
             const userId = this.decodeAccess['user_id']
-            const response = await fetch(import.meta.env.VITE_API_URL + `${userId}/`, {
+            const response = await fetch(this.base_url + `${userId}/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + this.accessToken
@@ -165,7 +166,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async updateTokens() {
-            const response = await fetch(import.meta.env.VITE_API_URL + 'refresh/', {
+            const response = await fetch(this.base_url + 'refresh/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
