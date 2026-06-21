@@ -2,7 +2,7 @@ import datetime
 import unittest
 import xml.etree.ElementTree as ET
 
-from main import build_yml, PRODUCTS, CATEGORIES
+from feed_task import build_yml, PRODUCTS, CATEGORIES
 
 
 class TestF(unittest.TestCase):
