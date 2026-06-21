@@ -1,7 +1,6 @@
 import html
 from datetime import datetime
 import xml.etree.ElementTree as ET
-from zoneinfo import available_timezones
 
 CATEGORIES = [
     {
