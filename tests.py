@@ -13,6 +13,7 @@ class TestF(unittest.TestCase):
     def test_categories(self):
         self.assertIn('1', [item.get('id') for item in self.xml.findall('.//categories/category')])
         self.assertIn('2', [item.get('id') for item in self.xml.findall('.//categories/category')])
+
         self.assertNotIn('3', [item.get('id') for item in self.xml.findall('.//categories/category')])
 
 
@@ -20,6 +21,7 @@ class TestF(unittest.TestCase):
         self.assertIn('101', [item.get('id') for item in self.xml.findall('.//offers/offer')])
         self.assertIn('102', [item.get('id') for item in self.xml.findall('.//offers/offer')])
         self.assertIn('107', [item.get('id') for item in self.xml.findall('.//offers/offer')])
+
         self.assertNotIn('103', [item.get('id') for item in self.xml.findall('.//offers/offer')])
         self.assertNotIn('104', [item.get('id') for item in self.xml.findall('.//offers/offer')])
         self.assertNotIn('105', [item.get('id') for item in self.xml.findall('.//offers/offer')])
