@@ -2,6 +2,8 @@ import html
 from datetime import datetime
 import xml.etree.ElementTree as ET
 
+from data_processing import filter_data, filter_product, check_price
+
 CATEGORIES = [
     {
         "id": 1,
@@ -158,44 +160,14 @@ def build_yml(products, categories, generated_at):
     return ET.tostring(root, encoding='utf-8')
 
 
-def filter_data(products, categories):
-    """
-    Пайплайн фильтрации данных
-    :param products:
-    :param categories:
-    :return:
-    """
 
-    categories = list(filter(lambda c: c.get('is_active'), categories))
-    categories.sort(key=lambda c: c['id'])
-    products = filter(filter_product, products)
-    products = list(filter(lambda p: p.get('category_id') in [c['id'] for c in categories], products))
-    products.sort(key=lambda p: p['id'])
-
-    return products, categories
-
-def filter_product(product):
-    if any((
-        not product.get('is_active'),
-        not float(product.get('price')) > 0.0 or product.get('name').strip() == '',
-        not product.get('image_url') or not product.get('image_url').startswith(('http', 'https'))
-    )):
-        return False
-    else:
-        return True
-
-
-def check_price(old_price: int, price: int):
-    if not old_price or price > old_price:
-        return False
-    return True
 
 
 if __name__ == "__main__":
     result = build_yml(
         products=PRODUCTS,
         categories=CATEGORIES,
-        generated_at=datetime(2026, 6, 18, 12, 0),
+        generated_at=datetime.today(),
     )
 
     print(result)
