@@ -14,6 +14,7 @@ def filter_data(products, categories):
 
     return products, categories
 
+
 def filter_product(product):
     if any((
         not product.get('is_active'),
