@@ -2,7 +2,7 @@ import html
 from datetime import datetime
 import xml.etree.ElementTree as ET
 
-from data_processing import filter_data, filter_product, check_price
+from data_processing import filter_data, check_price
 
 CATEGORIES = [
     {
