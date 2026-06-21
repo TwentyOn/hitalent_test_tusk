@@ -160,18 +160,12 @@ def build_yml(products, categories, generated_at):
     return ET.tostring(root, encoding='utf-8')
 
 
-
-
-
 if __name__ == "__main__":
     result = build_yml(
         products=PRODUCTS,
         categories=CATEGORIES,
         generated_at=datetime.today(),
     )
-
-    print(result)
-    print(ET.fromstring(result).tag)
 
     with open("docs/output.xml", "wb") as f:
         f.write(result)
