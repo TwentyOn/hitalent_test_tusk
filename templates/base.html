@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>{{ title }}</title>{% endblock %}
+</head>
+<body>
+    <a href="{% url 'dds-list' %}">к списку записей</a>
+    {% block content %}{% endblock %}
+</body>
+</html>
