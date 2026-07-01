@@ -9,7 +9,12 @@ from .forms import CreateTypeForm, CreateStatusForm
 # Create your views here.
 class MainView(View):
     def get(self, request):
-        return render(request, "dictionary/index.html")
+        return render(request, "dictionary/index.html", context={
+            'types': Type.objects.all(),
+            'statuses': Status.objects.all(),
+            'title': 'Управление справочником'
+        })
+
 
 class StatusCreateView(CreateView):
     model = Status
