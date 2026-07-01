@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div align="center">
+        <a href="{% url 'dictionary:status-create' %}" class="btn btn-primary">Создать новый статус</a>
+        <a href="{% url 'dictionary:type-create' %}" class="btn btn-primary">Создать новый тип</a>
+    </div>
+{% endblock %}
