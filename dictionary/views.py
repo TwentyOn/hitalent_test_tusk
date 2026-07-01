@@ -14,11 +14,11 @@ class MainView(View):
 class StatusCreateView(CreateView):
     model = Status
     form_class = CreateStatusForm
-    template_name = 'status/create.html'
+    template_name = 'dictionary/status/create.html'
     success_url = reverse_lazy("dds:dds-list")
 
 class TypeCreateView(CreateView):
     model = Type
     form_class = CreateTypeForm
-    template_name = 'type/create.html'
+    template_name = 'dictionary/type/create.html'
     success_url = reverse_lazy("dds:dds-list")
