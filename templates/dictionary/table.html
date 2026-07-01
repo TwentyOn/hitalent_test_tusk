@@ -1,0 +1,19 @@
+<table class="table table-striped-columns caption-top">
+    <caption>Список статусов</caption>
+    <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for status in statuses %}
+    <tr>
+        <th>{{ status.name }}</th>
+        <th>
+            <a href="{{status.pk}}">изменить</a>
+            <a href="{{status.pk}}">удалить</a>
+        </th>
+    </tr>
+    {% endfor %}</tbody>
+</table>

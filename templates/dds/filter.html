@@ -1,0 +1,11 @@
+<div class="date-range">
+    <form >
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if filtered %}
+            <input type="submit" value="сброс">
+        {% else %}
+            <input type="submit" value="фильтровать">
+        {% endif %}
+    </form>
+</div>

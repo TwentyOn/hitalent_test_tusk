@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for record in records %}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <strong class="card-title">Запись №{{ record.pk }}</strong>
-                        <p>Статус: {{record.status.name }}</p>
-                        <p>Тип: {{ record.type.name }}</p>
-                        <p>Сумма: {{ record.summa }}</p>
-                        <p>Комментарий: {{ record.comment }}</p>
-                        <a href="{% url 'dds:dds-update' record.pk %}">Редактировать</a>
-                        <a href="{% url 'dds:dds-delete' record.pk %}">Удалить</a>
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            {% include 'dds/filter.html' with filtered=filtered form=filter_form %}
+        </div>
+        <div class="col-10">
+            {% for record in records %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <strong class="card-title">Запись №{{ record.pk }} от {{ record.created_at }}</strong>
+                                <p>Статус: {{record.status.name }}</p>
+                                <p>Тип: {{ record.type.name }}</p>
+                                <p>Сумма: {{ record.summa }}</p>
+                                <p>Комментарий: {{ record.comment }}</p>
+                                <a href="{% url 'dds:dds-update' record.pk %}">Редактировать</a>
+                                <a href="{% url 'dds:dds-delete' record.pk %}">Удалить</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
+    </div>
+</div>
 
-    {% endfor %}
 {% endblock %}

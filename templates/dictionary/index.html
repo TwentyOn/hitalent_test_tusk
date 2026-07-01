@@ -1,7 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div align="center">
-        <a href="{% url 'dictionary:status-create' %}" class="btn btn-primary">Создать новый статус</a>
-        <a href="{% url 'dictionary:type-create' %}" class="btn btn-primary">Создать новый тип</a>
+    <div>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+                <a href="{% url 'dictionary:status-create' %}" class="btn btn-primary">Создать новый статус</a>
+                <table class="table table-striped-columns caption-top">
+                    <caption>Список статусов</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Название</th>
+                            <th scope="col">Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for status in statuses %}
+                            <tr>
+                                <th>{{ status.name }}</th>
+                                <th>
+                                    <a href="{{status.pk}}">изменить</a>
+                                    <a href="{{status.pk}}">удалить</a>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col">
+                <a href="{% url 'dictionary:type-create' %}" class="btn btn-primary">Создать новый тип</a>
+                <table class="table table-striped-columns caption-top">
+                    <caption>Список типов</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Название</th>
+                            <th scope="col">Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for type in types %}
+                            <tr>
+                                <th>{{ type.name }}</th>
+                                <th>
+                                    <a href="{{type.pk}}">изменить</a>
+                                    <a href="{{type.pk}}">удалить</a>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
     </div>
 {% endblock %}
