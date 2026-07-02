@@ -20,8 +20,8 @@
                             <tr>
                                 <th>{{ status.name }}</th>
                                 <th>
-                                    <a href="{{status.pk}}">изменить</a>
-                                    <a href="{{status.pk}}">удалить</a>
+                                    <a href="{% url 'dictionary:status-update' status.pk %}">изменить</a>
+                                    <a href="{% url 'dictionary:status-delete' status.pk %}">удалить</a>
                                 </th>
                             </tr>
                         {% endfor %}
@@ -46,8 +46,8 @@
                             <tr>
                                 <th>{{ type.name }}</th>
                                 <th>
-                                    <a href="{{type.pk}}">изменить</a>
-                                    <a href="{{type.pk}}">удалить</a>
+                                    <a href="{% url 'dictionary:type-update' type.pk %}">изменить</a>
+                                    <a href="{% url 'dictionary:type-delete' type.pk %}">удалить</a>
                                 </th>
                             </tr>
                         {% endfor %}
@@ -72,8 +72,8 @@
                             <tr>
                                 <th>{{ category.name }}</th>
                                 <th>
-                                    <a href="{{category.pk}}">изменить</a>
-                                    <a href="{{category.pk}}">удалить</a>
+                                    <a href="{% url 'dictionary:category-update' category.pk %}">изменить</a>
+                                    <a href="{% url 'dictionary:category-delete' category.pk %}">удалить</a>
                                 </th>
                             </tr>
                         {% endfor %}

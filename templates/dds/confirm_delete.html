@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
   <form method="post">{% csrf_token %}
-      <p>Вы действильно хотите удалить "запись №{{ object.pk }}"?</p>
+      <p>Вы действильно хотите удалить {{ object_name }}?</p>
       {{ form }}
       <button type="submit" class="btn btn-primary">Удалить</button>
   </form>

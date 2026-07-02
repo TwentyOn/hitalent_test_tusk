@@ -35,9 +35,6 @@ class DdsListView(ListView):
         types = self.request.GET.getlist('type')
         categories = self.request.GET.getlist('category')
 
-        print(self.request.GET)
-        print(bool(date_from), bool(date_to), bool(statuses))
-
         if date_from:
             queryset = queryset.filter(created_at__gte=date_from)
             self.filtered = True
