@@ -69,7 +69,7 @@ class TypeCreateView(CreateView):
 
 class TypeUpdateView(UpdateView):
     model = Type
-    form_class = CreateStatusForm
+    form_class = CreateTypeForm
     template_name = 'dictionary/create_form.html'
     success_url = reverse_lazy("dictionary:manage")
     slug_field = 'id'
