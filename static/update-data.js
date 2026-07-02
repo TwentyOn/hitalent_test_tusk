@@ -1,9 +1,12 @@
 const typeField = document.getElementById('typeField')
 const categoryField = document.getElementById('categoryField')
-const subCategoryField = document
 
 typeField.addEventListener('change', typeChange)
-categoryField.innerHTML = '<option value selected>выберите тип</option>'
+
+const cur_type_option = typeField.options[typeField.selectedIndex].text
+if (cur_type_option === '---------') {
+    categoryField.innerHTML = '<option value selected>выберите тип</option>'
+}
 
 
 async function typeChange(event) {
