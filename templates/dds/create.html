@@ -5,7 +5,7 @@
     <form method="post" id="createRecordForm">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Создать</button>
+        <button type="submit" class="btn btn-primary">{{ action }}</button>
     </form>
 {% endblock %}
 {% block script %}

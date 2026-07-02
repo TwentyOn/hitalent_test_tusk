@@ -14,6 +14,7 @@ class DdsCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создание новой записи'
+        context['action'] = 'Создать'
 
         return context
 
@@ -74,7 +75,7 @@ class DdsListView(ListView):
 class DdsUpdateView(UpdateView):
     model = Dds
     form_class = CreateDdsRecordForm
-    template_name = 'dds/update.html'
+    template_name = 'dds/create.html'
     context_object_name = 'record'
     slug_field = 'id'
     slug_url_kwarg = 'id'
@@ -82,6 +83,7 @@ class DdsUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Редактирование записи'
+        context['action'] = 'Обновить'
 
         return context
 
