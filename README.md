@@ -86,3 +86,6 @@ python manage.py migrate
 ```commandline
 python manage.py runserver
 ```
+
+После успешного запуска главная страница веб-приложения будет доступна по адресу: 
+http://127.0.0.1:8000/
