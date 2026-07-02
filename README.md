@@ -67,16 +67,16 @@ python -m venv .venv
 3. Активировать окружение
 - windows (CMD)
     ```commandline
-    venv\Scripts\activate
+    .venv\Scripts\activate
     ```
 - macOS / Linux:
     ```commandline
-    source venv/bin/activate
+    source .venv/bin/activate
     ```
 
 4. Установка зависимостей
 ```commandline
-pip install -r requiremets.txt 
+pip install -r requirements.txt 
 ```
 5. Применить миграции Django
 ```commandline
