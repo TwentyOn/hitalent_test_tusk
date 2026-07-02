@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% block title %}<title>Создание типа</title>{% endblock %}
+{% block title %}<title>{{ action }}</title>{% endblock %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

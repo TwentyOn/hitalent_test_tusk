@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-    <form method="post">
+    <form method="post" id="createRecordForm">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'update-data.js' %}"></script>
 {% endblock %}

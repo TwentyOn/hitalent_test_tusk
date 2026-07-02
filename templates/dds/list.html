@@ -14,6 +14,7 @@
                                 <strong class="card-title">Запись №{{ record.pk }} от {{ record.created_at }}</strong>
                                 <p>Статус: {{record.status.name }}</p>
                                 <p>Тип: {{ record.type.name }}</p>
+                                <p>Категория: {{ record.category }}</p>
                                 <p>Сумма: {{ record.summa }}</p>
                                 <p>Комментарий: {{ record.comment }}</p>
                                 <a href="{% url 'dds:dds-update' record.pk %}">Редактировать</a>

@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, ListView, CreateView, UpdateView
 
 from .models import Dds
-from .forms import CreateDdsRecordForm, MyForm
+from .forms import CreateDdsRecordForm, FilterForm
 
 
 class DdsCreateView(CreateView):
@@ -32,6 +32,8 @@ class DdsListView(ListView):
         date_from = self.request.GET.get('date_from')
         date_to = self.request.GET.get('date_to')
         statuses = self.request.GET.getlist('status')
+        types = self.request.GET.getlist('type')
+        categories = self.request.GET.getlist('category')
 
         print(self.request.GET)
         print(bool(date_from), bool(date_to), bool(statuses))
@@ -48,6 +50,14 @@ class DdsListView(ListView):
             queryset = queryset.filter(status__name__in=statuses)
             self.filtered = True
 
+        if types:
+            queryset = queryset.filter(type__name__in=types)
+            self.filtered = True
+
+        if categories:
+            queryset = queryset.filter(category__name__in=categories)
+            self.filtered = True
+
 
 
         return queryset
@@ -55,7 +65,7 @@ class DdsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['filter_form'] = MyForm
+        context['filter_form'] = FilterForm(disabled=self.filtered)
         context['title'] = 'Список записей'
         context['filtered'] = self.filtered
 
