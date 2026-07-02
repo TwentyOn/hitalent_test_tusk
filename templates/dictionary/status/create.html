@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{% block title %}<title>Создание статуса</title>{% endblock %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Создать</button>
-    </form>
-{% endblock %}
