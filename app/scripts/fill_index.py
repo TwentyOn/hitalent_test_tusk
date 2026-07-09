@@ -1,4 +1,4 @@
-import asyncio, logging
+import logging
 
 from elasticsearch import helpers
 from sqlalchemy import select
