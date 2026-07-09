@@ -29,6 +29,3 @@ async def fill_db():
         logger.info('БД успешно заполнена')
     except Exception as e:
         logger.info('Ошибка заполнения БД', exc_info=True)
-
-
-asyncio.run(fill_db())

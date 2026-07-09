@@ -24,7 +24,7 @@ async def generate_docs(docs):
 
 async def bulk_data():
     try:
-        if client.indices.exists(index=INDEX_NAME):
+        if await client.indices.exists(index=INDEX_NAME):
             logger.info('Удаление существующего индекса...')
             await client.indices.delete(index=INDEX_NAME)
 
@@ -37,6 +37,3 @@ async def bulk_data():
         logger.info('Индекс успешно заполнен')
     except Exception as e:
         logger.error('Ошибка заполнения идекса', exc_info=True)
-
-
-asyncio.run(bulk_data())
