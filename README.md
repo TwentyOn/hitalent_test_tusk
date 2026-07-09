@@ -29,8 +29,10 @@
 [docker-compose.yaml](docker-compose.yaml)
 
 ## Запуск
-Описание
-
+1. клонирование репозитория
+```commandline
+git clone https://github.com/TwentyOn/test_tasks.git -b analytical_sol_task
+```
 1. запуск docker-compose
 ```commandline
 docker compose up -d
