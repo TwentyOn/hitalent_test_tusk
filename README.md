@@ -34,7 +34,7 @@
 ## Запуск
 1. клонирование репозитория
 ```commandline
-git clone https://github.com/TwentyOn/test_tasks.git -b analytical_sol_task
+git clone https://github.com/TwentyOn/test_tasks.git -b analytical_sol_task && cd test_tasks
 ```
 1. запуск docker-compose
 ```commandline
