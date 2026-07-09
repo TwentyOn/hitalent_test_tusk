@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 client = AsyncElasticsearch(
     "https://my-elasticsearch-project-fdb0a9.es.us-central1.gcp.elastic.cloud:443",
+    request_timeout=30,
     api_key=ELASTIC_API_KEY,
 )
 
