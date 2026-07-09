@@ -1,18 +1,21 @@
-import asyncio
+import asyncio, logging
 
 from elasticsearch import helpers
 from sqlalchemy import select
 
 from backend.db import async_session_maker
 from models import Document
-from backend.elastic import client
+from backend.elastic import client, INDEX_NAME
+
+logging.basicConfig(level=logging.INFO, format='[{asctime}] #{levelname:4} {name}:{lineno} - {message}', style='{')
+logger = logging.getLogger(__name__)
 
 
 async def generate_docs(docs):
     for row in docs:
         i = row['id']
         yield {
-            "_index": "documents",
+            "_index": INDEX_NAME,
             "_id": i,
             "id": i,
             "text": row['text'],
@@ -20,11 +23,20 @@ async def generate_docs(docs):
 
 
 async def bulk_data():
-    async with async_session_maker() as session:
-        result = await session.execute(select(Document.id, Document.text))
-        documents = result.mappings().all()
+    try:
+        if client.indices.exists(index=INDEX_NAME):
+            logger.info('Удаление существующего индекса...')
+            await client.indices.delete(index=INDEX_NAME)
 
-    await helpers.async_bulk(client, generate_docs(documents))
+        logger.info('Заполнение индекса...')
+        async with async_session_maker() as session:
+            result = await session.execute(select(Document.id, Document.text))
+            documents = result.mappings().all()
+
+        await helpers.async_bulk(client, generate_docs(documents))
+        logger.info('Индекс успешно заполнен')
+    except Exception as e:
+        logger.error('Ошибка заполнения идекса', exc_info=True)
 
 
 asyncio.run(bulk_data())
