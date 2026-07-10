@@ -53,6 +53,11 @@ docker compose exec backend alembic upgrade head
 docker compose exec backend python -m scripts.startup
 ```
 
+5. тесты
+```commandline
+docker compose exec backend pytest
+```
+
 После выполнения вышеуказанных инструкции с API можно работать по адресу:
 http://localhost:8000/docs
 
