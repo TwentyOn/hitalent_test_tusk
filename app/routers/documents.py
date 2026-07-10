@@ -31,6 +31,7 @@ async def delete_document(pk: int, db: AsyncSession = Depends(get_db)):
 
     if db_document is None:
         raise HTTPException(status_code=404, detail="Документ не найден")
+
     await db.delete(db_document)
     index_deleted = await delete_doc(pk)
 
