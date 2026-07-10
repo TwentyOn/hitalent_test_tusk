@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from elasticsearch import Elasticsearch, NotFoundError
 
 from backend.db import get_db
-from backend.elastic import get_client
+from backend.elastic import get_client, INDEX_NAME
 from models import Document
 from schemas import DocumentSchema
 
@@ -14,7 +14,6 @@ from schemas import DocumentSchema
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=['документы'])
 
-INDEX_NAME = 'documents'
 
 
 @router.get('/documents', response_model=list[DocumentSchema], description='Поиск документов')
