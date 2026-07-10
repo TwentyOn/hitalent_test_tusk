@@ -11,8 +11,8 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
-      ELASTIC_HOST: https://my-elasticsearch-project-fdb0a9.es.us-central1.gcp.elastic.cloud:443
-      ELASTIC_API_KEY: VnJmZlJaOEI2Z3NYZzZHUnRqVVA6bWN2eURQUW5jSHdIbHFIWkQ0VW9sZw==
+      ELASTIC_HOST: *ваш elastic хост*
+      ELASTIC_API_KEY: *ваш API ключ*
     depends_on:
       - db
   db:
