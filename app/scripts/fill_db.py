@@ -1,5 +1,4 @@
 import csv
-import asyncio
 import datetime
 import logging
 
