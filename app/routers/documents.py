@@ -1,21 +1,43 @@
+import logging
+
 from fastapi import APIRouter, HTTPException, Response, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from elasticsearch import Elasticsearch, NotFoundError
 
 from backend.db import get_db
-from backend.elastic import search_docs, delete_doc
+from backend.elastic import get_client
 from models import Document
 from schemas import DocumentSchema
 
+
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=['документы'])
+
+INDEX_NAME = 'documents'
 
 
 @router.get('/documents', response_model=list[DocumentSchema], description='Поиск документов')
-async def search_documents(query: str, db: AsyncSession = Depends(get_db)) -> list[DocumentSchema]:
-    search_result = await search_docs(query)
+async def search_documents(
+        query: str,
+        db: AsyncSession = Depends(get_db),
+        es: Elasticsearch = Depends(get_client)
+) -> list[DocumentSchema]:
+
+    docs = await es.search(
+        index=INDEX_NAME,
+        query={
+            "match": {
+                'text': query
+            }
+        },
+        size=20
+    )
+    docs_ids = [d['_source']['id'] for d in docs['hits']['hits']]
+
     result = await db.execute(
         select(Document).
-        where(Document.id.in_(search_result)).
+        where(Document.id.in_(docs_ids)).
         order_by(Document.created_date.desc())
     )
     documents = result.scalars().all()
@@ -24,7 +46,11 @@ async def search_documents(query: str, db: AsyncSession = Depends(get_db)) -> li
 
 
 @router.delete("/documents/{pk}", description='Удаление документа')
-async def delete_document(pk: int, db: AsyncSession = Depends(get_db)):
+async def delete_document(
+        pk: int,
+        db: AsyncSession = Depends(get_db),
+        es: Elasticsearch = Depends(get_client)
+):
     stmt = select(Document).where(Document.id == pk)
     result = await db.scalars(stmt)
     db_document = result.first()
@@ -33,10 +59,15 @@ async def delete_document(pk: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Документ не найден")
 
     await db.delete(db_document)
-    index_deleted = await delete_doc(pk)
 
-    if not index_deleted:
-        raise HTTPException(status_code=500, detail='Ошибка при удалении документа')
+    try:
+        await get_client().delete(index=INDEX_NAME, id=str(pk))
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail='Не удалось найти документ')
+    except Exception as err:
+        logger.error('Не удалось удалить документ в индексе ElasticSearch', exc_info=True)
+        raise HTTPException(status_code=500, detail='Не удалось удалить документ в индексе')
+
 
     await db.commit()
 
