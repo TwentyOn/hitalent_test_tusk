@@ -10,7 +10,7 @@ config = DbConfig()
 
 engine = create_async_engine(
     config.get_db_url(),
-    echo=True
+    echo=False
 )
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
