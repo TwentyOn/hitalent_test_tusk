@@ -55,12 +55,17 @@ async def app_test(async_sessionmaker):
     app.dependency_overrides.clear()
 
 @pytest_asyncio.fixture(scope="session")
-async def fill_data(async_sessionmaker):
+async def es_client():
     client = AsyncElasticsearch(
         config.host,
         request_timeout=30,
         api_key=config.api_key,
     )
+    yield client
+    await client.close()
+
+@pytest_asyncio.fixture(scope="session")
+async def fill_data(async_sessionmaker, es_client):
     async with async_sessionmaker() as session:
         await fill_db(session)
         with patch('scripts.fill_index.INDEX_NAME', 'test_documents'):
