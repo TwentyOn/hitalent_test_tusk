@@ -5,7 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 @pytest.mark.asyncio
-async def test_get(client, fill):
+async def test_get(client, fill_data):
     with patch('routers.documents.INDEX_NAME', 'test_documents'):
         response = await client.get('/documents', params={'query': 'девушки'})
         content = response.json()

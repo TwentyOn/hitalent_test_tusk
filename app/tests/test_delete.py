@@ -8,7 +8,7 @@ import pytest
     (9999, 404)
 ])
 @pytest.mark.asyncio
-async def test_delete(client, doc_id: int, status_code: int, fill):
+async def test_delete(client, doc_id: int, status_code: int, fill_data):
     with patch('routers.documents.INDEX_NAME', 'test_documents'):
         response = await client.delete(f'/documents/{doc_id}')
         assert response.status_code == status_code

@@ -16,6 +16,7 @@ from main import app
 from settings import ElasticConfig
 
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+config = ElasticConfig()
 
 
 @pytest_asyncio.fixture(scope="session")
@@ -45,7 +46,6 @@ async def app_test(async_sessionmaker):
 
     app.dependency_overrides[get_db] = _get_db
 
-    config = ElasticConfig()
     app.dependency_overrides[get_client] = lambda: AsyncElasticsearch(
         config.host,
         request_timeout=30,
@@ -55,11 +55,19 @@ async def app_test(async_sessionmaker):
     app.dependency_overrides.clear()
 
 @pytest_asyncio.fixture(scope="session")
-async def fill(async_sessionmaker):
+async def fill_data(async_sessionmaker):
+    client = AsyncElasticsearch(
+        config.host,
+        request_timeout=30,
+        api_key=config.api_key,
+    )
     async with async_sessionmaker() as session:
         await fill_db(session)
         with patch('scripts.fill_index.INDEX_NAME', 'test_documents'):
             await bulk_data(session)
+    yield
+    if await client.indices.exists(index='test_documents'):
+        await client.indices.delete(index='test_documents')
 
 
 @pytest_asyncio.fixture(scope='session')
