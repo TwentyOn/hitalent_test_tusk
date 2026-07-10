@@ -54,25 +54,23 @@ async def app_test(async_sessionmaker):
     yield app
     app.dependency_overrides.clear()
 
+
+
 @pytest_asyncio.fixture(scope="session")
-async def es_client():
-    client = AsyncElasticsearch(
+async def fill_data(async_sessionmaker):
+    es_client = AsyncElasticsearch(
         config.host,
         request_timeout=30,
         api_key=config.api_key,
     )
-    yield client
-    await client.close()
 
-@pytest_asyncio.fixture(scope="session")
-async def fill_data(async_sessionmaker, es_client):
     async with async_sessionmaker() as session:
         await fill_db(session)
         with patch('scripts.fill_index.INDEX_NAME', 'test_documents'):
             await bulk_data(session)
     yield
-    if await client.indices.exists(index='test_documents'):
-        await client.indices.delete(index='test_documents')
+    if await es_client.indices.exists(index='test_documents'):
+        await es_client.indices.delete(index='test_documents')
 
 
 @pytest_asyncio.fixture(scope='session')
