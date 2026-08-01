@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 from collections import defaultdict
+from string import digits, punctuation
 import shutil
 
 IMG_PATH = Path('docs/images/train')
@@ -16,7 +17,8 @@ def script1():
 
     img_to_classes = defaultdict(set)
     for ann in coco['annotations']:
-        img_to_classes[ann['image_id']].add(id_to_category[ann['category_id']])
+        clean_class = id_to_category[ann['category_id']].strip(digits+punctuation)
+        img_to_classes[ann['image_id']].add(clean_class)
 
     for img in coco['images']:
         cls = '_'.join(c.split('_')[0] for c in img_to_classes[img['id']])
