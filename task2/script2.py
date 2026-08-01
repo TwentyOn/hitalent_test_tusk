@@ -8,10 +8,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s  - %(levelname)s - %(message)s')
 
 
-def script2():
-    with open(COCO_FILE_PATH.parent / 'updated_annotations.json') as f:
-        coco_data = json.load(f)
-
+def check_file_paths(coco_data: dict) -> list[str]:
     miss_imgs = []
     for img in coco_data['images']:
         filename = img['file_name']
@@ -20,19 +17,35 @@ def script2():
             logger.warning('несуществующий файл:', filename)
     else:
         logger.info('все файлы на месте')
+    return miss_imgs
 
+
+def check_img_ann_errors(coco_data: dict) -> set[int]:
     ann_img_ids = {ann['id'] for ann in coco_data['annotations']}
     img_ids = {img['id'] for img in coco_data['images']}
     miss_img_ids = ann_img_ids.difference(img_ids)
     if miss_img_ids:
         logger.warning(
-            f'Изображения отсутствуют в аннотациях или списке изоборажений (ID): {ann_img_ids.difference(img_ids)}')
+            f'Изображения отсутствуют в аннотациях или списке изоборажений (ID): {miss_img_ids}')
+    return miss_img_ids
 
+
+def check_cat_ann_errors(coco_data: dict) -> set[int]:
     ann_cat_ids = {ann['category_id'] for ann in coco_data['annotations']}
     cat_ids = {cat['id'] for cat in coco_data['categories']}
     miss_cat_ids = cat_ids.difference(ann_cat_ids)
     if miss_cat_ids:
         logger.warning(f'Категории отсутствуют в аннотациях или списке категорий (ID): {miss_cat_ids}')
+    return miss_cat_ids
+
+
+def script2():
+    with open(COCO_FILE_PATH.parent / 'updated_annotations.json') as f:
+        coco_data = json.load(f)
+
+    miss_imgs = check_file_paths(coco_data)
+    miss_img_ids = check_img_ann_errors(coco_data)
+    miss_cat_ids = check_cat_ann_errors(coco_data)
 
     error_cnt = len(miss_cat_ids) + len(miss_img_ids)
     path_error_cnt = len(miss_imgs)
