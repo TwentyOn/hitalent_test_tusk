@@ -114,7 +114,7 @@ def script3():
     images_base_dir = IMG_PATH
 
     if not os.path.exists(UPDATE_ANN_PATH):
-        logger.error(f"Файл {UPDATE_ANN_PATH} не найден!")
+        logger.error(f"Файл {UPDATE_ANN_PATH} не найден")
         return
 
     convert_coco_to_yolo_with_images(COCO_FILE_PATH, output_dir, images_base_dir)
