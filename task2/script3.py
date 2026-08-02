@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from collections import defaultdict
 
-from settings import logger
+from task2.settings import logger, UPDATE_ANN_PATH, COCO_FILE_PATH, OUTPUT_PATH, IMG_PATH
 
 
 def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, images_base_dir: str='.'):
@@ -109,17 +109,14 @@ def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, image
 
 
 def main():
-    coco_json_path = 'output/annotations/updated_annotations.json'
+    output_dir = OUTPUT_PATH / 'yolo_dataset'
+    images_base_dir = IMG_PATH
 
-    output_dir = 'output/yolo_dataset'
-
-    images_base_dir = '.'
-
-    if not os.path.exists(coco_json_path):
-        logger.error(f"Файл {coco_json_path} не найден!")
+    if not os.path.exists(UPDATE_ANN_PATH):
+        logger.error(f"Файл {UPDATE_ANN_PATH} не найден!")
         return
 
-    convert_coco_to_yolo_with_images(coco_json_path, output_dir, images_base_dir)
+    convert_coco_to_yolo_with_images(COCO_FILE_PATH, output_dir, images_base_dir)
 
 
 if __name__ == "__main__":

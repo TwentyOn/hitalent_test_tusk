@@ -4,7 +4,7 @@ from collections import defaultdict
 from string import digits, punctuation
 import shutil
 
-from settings import COCO_FILE_PATH, IMG_PATH, OUTPUT_PATH, UPDATE_ANN_PATH
+from task2.settings import COCO_FILE_PATH, IMG_PATH, OUTPUT_PATH, UPDATE_ANN_PATH
 
 def script1():
     with open(COCO_FILE_PATH) as coco_json_file:

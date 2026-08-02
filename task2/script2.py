@@ -1,7 +1,7 @@
 import json
 import os
 
-from settings import OUTPUT_PATH, UPDATE_ANN_PATH, logger
+from task2.settings import OUTPUT_PATH, UPDATE_ANN_PATH, logger
 
 
 def check_file_paths(coco_data: dict) -> list[str]:
@@ -55,8 +55,8 @@ def script2():
 
     logger.info(f'Ошибок: {error_cnt}')
     logger.info(f'Ошибки путей файлов: {path_error_cnt}')
-    logger.info(f'Ошибки соглассованости аннотации/список изображений: {ids_img_error_cnt}')
-    logger.info(f'Ошибки соглассованости аннотации/список категорий: {ids_cat_error_cnt}')
+    logger.info(f'Ошибки соглассованости - аннотации/список изображений: {ids_img_error_cnt}')
+    logger.info(f'Ошибки соглассованости - аннотации/список категорий: {ids_cat_error_cnt}')
     logger.info(f'Количество изображений: {img_cnt}')
     logger.info(f'Количество аннотаций: {ann_cnt}')
 
