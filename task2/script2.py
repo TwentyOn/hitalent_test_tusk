@@ -81,6 +81,7 @@ def script2():
             'annotations_count': ann_cnt,
         }
         json.dump(data, json_file, indent=4)
+    logger.info(f'отчет записан в {OUTPUT_PATH / "dataset_report.json"}')
 
 
 if __name__ == '__main__':

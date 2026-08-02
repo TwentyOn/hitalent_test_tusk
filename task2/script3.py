@@ -109,7 +109,7 @@ def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, image
 
 
 
-def main():
+def script3():
     output_dir = OUTPUT_PATH / 'yolo_dataset'
     images_base_dir = IMG_PATH
 
@@ -121,4 +121,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    script3()
