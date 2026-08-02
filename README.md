@@ -47,5 +47,5 @@ python -m task#.script#
 
 Например:
 ```commandline
-python -m task1.script1.py
+python -m task1.script1
 ```
