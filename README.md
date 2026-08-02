@@ -26,14 +26,11 @@
   - script3.py - YOLO-аннотации записываются в дирректорию: 
   task2/output/yolo_dataset/
 
-
-
 ## Необходимые компоненты
 - Среда python
 
-
 ## Запуск
-1. Клинование репозитория:
+1. Клонование репозитория:
 ```commandline
 git clone https://github.com/TwentyOn/test_tasks.git -b datalight_task && cd test_tasks
 ```
