@@ -3,6 +3,6 @@ __pycache__/
 
 *.env
 
-docs/
+task2/output/
 yolo_dataset/
-*.json
+dataset_report.json
