@@ -4,7 +4,7 @@ from collections import defaultdict
 from string import digits, punctuation
 import shutil
 
-from task2.settings import COCO_FILE_PATH, IMG_PATH, OUTPUT_PATH, UPDATE_ANN_PATH
+from task2.settings import COCO_FILE_PATH, IMG_PATH, OUTPUT_PATH, UPDATE_ANN_PATH, logger
 
 def script1():
     with open(COCO_FILE_PATH) as coco_json_file:
@@ -25,11 +25,13 @@ def script1():
         img['file_name'] = target_path.as_posix()
         os.makedirs(os.path.join(OUTPUT_PATH / 'images', cls), exist_ok=True)
         shutil.copy(source_path, target_path)
+        logger.info(f'Классификация изображений: {target_path}')
 
     if not os.path.exists(UPDATE_ANN_PATH):
         os.makedirs(UPDATE_ANN_PATH.parent, exist_ok=True)
     with open(UPDATE_ANN_PATH, 'w') as upd_ann_json_file:
         json.dump(coco, upd_ann_json_file, indent=4)
+    logger.info(f'Обновленная аннотация записана: {UPDATE_ANN_PATH}')
 
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@
 ## Запуск
 1. Клинование репозитория:
 ```commandline
-git clone https://github.com/TwentyOn/test_tasks.git -b datalight_task
+git clone https://github.com/TwentyOn/test_tasks.git -b datalight_task && cd test_tasks
 ```
 2. Запуск скриптов
 

@@ -104,6 +104,7 @@ def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, image
                 norm_height = height / img_height
 
                 yolo_file.write(f"{class_id} {x_center:.6f} {y_center:.6f} {norm_width:.6f} {norm_height:.6f}\n")
+        logger.info(f'YOLO-аннотации созданы: {yolo_folder}')
 
 
 
