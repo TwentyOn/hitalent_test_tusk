@@ -1,10 +1,11 @@
 import os
 from xml.etree import ElementTree
 
-from script1 import files
+from task1.script1 import files
+from task1.settings import BASE_DIR, logger
 
 def script4():
-    write_path = 'docs/{}_modified.xml'
+    write_path = (BASE_DIR / 'docs/{}_modified.xml').as_posix()
 
     for file in files:
         tree = ElementTree.parse(file)
@@ -21,7 +22,9 @@ def script4():
             img1.attrib['name'] = f'{name1.split('/')[-1][:-4]}.png'
             img2.attrib['name'] = f'{name2.split('/')[-1][:-4]}.png'
 
-        tree.write(write_path.format(file.split(os.sep)[-1][:-4]), encoding='utf-8', xml_declaration=True)
+        ann_path = write_path.format(file.split(os.sep)[-1][:-4])
+        tree.write(ann_path, encoding='utf-8', xml_declaration=True)
+        logger.info(f'Обновленная аннотация записана: {ann_path}')
 
 if __name__ == '__main__':
     script4()

@@ -1,6 +1,6 @@
 from collections import Counter
 
-from script1 import script1
+from task1.script1 import script1
 
 
 def script2():

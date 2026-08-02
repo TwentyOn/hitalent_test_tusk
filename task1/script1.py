@@ -1,8 +1,10 @@
 import os
 from xml.etree import ElementTree
 
+from task1.settings import BASE_DIR
+
 FIGURE_TAGS = ['box', 'polygon', 'points']
-files = [file.path for file in os.scandir('docs') if file.path.endswith('.xml') and 'modified' not in file.path]
+files = [file.path for file in os.scandir(BASE_DIR / 'docs') if file.path.endswith('.xml') and 'modified' not in file.path]
 
 def figure_exist(image):
     return any(image.find(tag) is not None for tag in FIGURE_TAGS)
