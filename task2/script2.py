@@ -1,11 +1,7 @@
 import json
 import os
-import logging
 
-from script1 import COCO_FILE_PATH
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s  - %(levelname)s - %(message)s')
+from settings import OUTPUT_PATH, UPDATE_ANN_PATH, logger
 
 
 def check_file_paths(coco_data: dict) -> list[str]:
@@ -40,7 +36,10 @@ def check_cat_ann_errors(coco_data: dict) -> set[int]:
 
 
 def script2():
-    with open(COCO_FILE_PATH.parent / 'updated_annotations.json') as f:
+    if not os.path.exists(UPDATE_ANN_PATH):
+        logger.error(f'Не найден файл {UPDATE_ANN_PATH}')
+        return
+    with open(UPDATE_ANN_PATH) as f:
         coco_data = json.load(f)
 
     miss_imgs = check_file_paths(coco_data)
@@ -61,7 +60,7 @@ def script2():
     logger.info(f'Количество изображений: {img_cnt}')
     logger.info(f'Количество аннотаций: {ann_cnt}')
 
-    with open('dataset_report.json', 'w') as json_file:
+    with open(OUTPUT_PATH / 'dataset_report.json', 'w') as json_file:
         data = {
             'error_count': error_cnt,
             'path_errors': {

@@ -1,13 +1,10 @@
 import json
 import os
-from pathlib import Path
 from collections import defaultdict
 from string import digits, punctuation
 import shutil
 
-IMG_PATH = Path('docs/images/train')
-SAVE_PATH = Path('docs/images')
-COCO_FILE_PATH = Path('docs/annotations/instances_train.json')
+from settings import COCO_FILE_PATH, IMG_PATH, OUTPUT_PATH, UPDATE_ANN_PATH
 
 def script1():
     with open(COCO_FILE_PATH) as coco_json_file:
@@ -24,13 +21,14 @@ def script1():
         cls = '_'.join(c.split('_')[0] for c in img_to_classes[img['id']])
         img_name = img['file_name']
         source_path = IMG_PATH / img_name
-        target_path = SAVE_PATH / cls / img_name
+        target_path = OUTPUT_PATH / 'images' / cls / img_name
         img['file_name'] = target_path.as_posix()
-        os.makedirs(os.path.join(SAVE_PATH, cls), exist_ok=True)
-        shutil.move(source_path, target_path)
+        os.makedirs(os.path.join(OUTPUT_PATH / 'images', cls), exist_ok=True)
+        shutil.copy(source_path, target_path)
 
-    update_ann_path = COCO_FILE_PATH.parent / 'updated_annotations.json'
-    with open(update_ann_path, 'w') as upd_ann_json_file:
+    if not os.path.exists(UPDATE_ANN_PATH):
+        os.makedirs(UPDATE_ANN_PATH.parent, exist_ok=True)
+    with open(UPDATE_ANN_PATH, 'w') as upd_ann_json_file:
         json.dump(coco, upd_ann_json_file, indent=4)
 
 

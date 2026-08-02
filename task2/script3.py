@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from collections import defaultdict
 
-from script2 import logger
+from settings import logger
 
 
 def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, images_base_dir: str='.'):
@@ -105,19 +105,18 @@ def convert_coco_to_yolo_with_images(coco_json_path: str, output_dir: str, image
 
                 yolo_file.write(f"{class_id} {x_center:.6f} {y_center:.6f} {norm_width:.6f} {norm_height:.6f}\n")
 
-        logger.info(f"Создана аннотация: {yolo_txt_path}")
 
 
 
 def main():
-    coco_json_path = 'docs/annotations/updated_annotations.json'
+    coco_json_path = 'output/annotations/updated_annotations.json'
 
-    output_dir = 'yolo_dataset'
+    output_dir = 'output/yolo_dataset'
 
     images_base_dir = '.'
 
     if not os.path.exists(coco_json_path):
-        logger.error(f"❌ Ошибка: Файл {coco_json_path} не найден!")
+        logger.error(f"Файл {coco_json_path} не найден!")
         return
 
     convert_coco_to_yolo_with_images(coco_json_path, output_dir, images_base_dir)
